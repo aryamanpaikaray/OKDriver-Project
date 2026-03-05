@@ -54,6 +54,17 @@ const DriverModel = {
             [driverId, limit]
         );
         return rows;
+    },
+
+    /**
+     * Create a new driver
+     */
+    async createDriver(name, vehicleNumber) {
+        const [result] = await db.execute(
+            `INSERT INTO drivers (name, vehicle_number) VALUES (?, ?)`,
+            [name, vehicleNumber]
+        );
+        return result.insertId;
     }
 };
 

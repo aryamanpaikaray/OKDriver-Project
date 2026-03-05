@@ -55,6 +55,22 @@ export const fetchAllDrivers = async () => {
 };
 
 /**
+ * Create a new Driver
+ */
+export const createDriver = async (name, vehicleNumber) => {
+    try {
+        const response = await axios.post(`${API_URL}/drivers_list`, {
+            name,
+            vehicle_number: vehicleNumber
+        });
+        return response.data;
+    } catch (error) {
+        const msg = error.response?.data?.message || 'Failed to create driver';
+        throw new Error(msg);
+    }
+};
+
+/**
  * Fetch Single Driver Profile & History
  */
 export const fetchDriverDetails = async (driverId) => {

@@ -46,8 +46,8 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Bottom Grid: Live Event Stream */}
-            <div className="h-[400px]">
+            {/* Bottom Grid: Live Event Stream — paginated 10 per page */}
+            <div className="h-[560px]">
                 <DriverTable events={events} />
             </div>
 

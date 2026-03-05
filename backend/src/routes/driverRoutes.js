@@ -1,7 +1,13 @@
 const express = require('express');
-const { getAllDrivers, getDriverDetails } = require('../controllers/driverController');
+const { getAllDrivers, getDriverDetails, addDriver } = require('../controllers/driverController');
 
 const router = express.Router();
+
+/**
+ * @route POST /api/drivers_list
+ * @desc Add a new driver
+ */
+router.post('/', addDriver);
 
 /**
  * @route GET /api/drivers

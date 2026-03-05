@@ -42,7 +42,30 @@ const getDriverDetails = async (req, res, next) => {
     }
 };
 
+const addDriver = async (req, res, next) => {
+    try {
+        const { name, vehicle_number } = req.body;
+        if (!name || !vehicle_number) {
+            return res.status(400).json({ success: false, message: 'Name and Vehicle Number are required' });
+        }
+
+        const driverId = await DriverModel.createDriver(name, vehicle_number);
+
+        const db = require('../config/db');
+        await db.execute(`INSERT INTO trips (driver_id, status) VALUES (?, 'active')`, [driverId]);
+
+        res.status(201).json({ success: true, data: { id: driverId, name, vehicle_number } });
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ success: false, message: 'Vehicle number already exists' });
+        }
+        logger.error(`Failed to add driver: ${error.message}`, error);
+        next(error);
+    }
+};
+
 module.exports = {
     getAllDrivers,
-    getDriverDetails
+    getDriverDetails,
+    addDriver
 };

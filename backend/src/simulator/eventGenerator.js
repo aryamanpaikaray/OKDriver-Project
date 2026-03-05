@@ -6,11 +6,30 @@ const http = require('http');
  * Generates events every 2-3 seconds for a random active driver
  */
 
-const driverTrips = [
+const EventModel = require('../models/eventModel');
+
+let driverTrips = [
     { driver_id: 1, trip_id: 1, name: 'John Doe' },
     { driver_id: 2, trip_id: 2, name: 'Jane Smith' },
     { driver_id: 3, trip_id: 3, name: 'Alan Turing' }
 ];
+
+// Fetch dynamically every 15 seconds
+setInterval(async () => {
+    try {
+        const drivers = await EventModel.getActiveDrivers();
+        if (drivers && drivers.length > 0) {
+            // map db struct to our sim struct
+            driverTrips = drivers.map(d => ({
+                driver_id: d.id,
+                trip_id: d.current_trip_id,
+                name: d.name
+            }));
+        }
+    } catch (e) {
+        logger.error("Failed to refresh drivers for simulation", e);
+    }
+}, 15000);
 
 const eventTypes = [
     'normal_driving', 'normal_driving', 'normal_driving',

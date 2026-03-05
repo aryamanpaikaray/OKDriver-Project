@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import DriversPage from './pages/DriversPage';
 import DriverDetailPage from './pages/DriverDetailPage';
+import DriverDashboard from './pages/DriverDashboard';
+import AddDriverPage from './pages/AddDriverPage';
 
 function App() {
     return (
@@ -12,8 +14,19 @@ function App() {
                 <Navbar />
                 <main>
                     <Routes>
+                        {/* Global fleet dashboard */}
                         <Route path="/" element={<Dashboard />} />
+
+                        {/* Driver roster */}
                         <Route path="/drivers" element={<DriversPage />} />
+
+                        {/* Register new driver */}
+                        <Route path="/drivers/add" element={<AddDriverPage />} />
+
+                        {/* Individual driver cockpit dashboard (with webcam + live stream) */}
+                        <Route path="/drivers/:id/cockpit" element={<DriverDashboard />} />
+
+                        {/* Deep-dive history / violations detail */}
                         <Route path="/drivers/:id" element={<DriverDetailPage />} />
                     </Routes>
                 </main>
