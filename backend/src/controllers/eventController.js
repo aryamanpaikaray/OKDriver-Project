@@ -60,7 +60,7 @@ const ingestEvent = async (req, res, next) => {
         });
 
     } catch (error) {
-        logger.error(`Event Ingestion Failed: ${error.message}`);
+        logger.error(`Event Ingestion Failed: ${error.message || 'Unknown error'}`, error);
         next(error);
     }
 };
